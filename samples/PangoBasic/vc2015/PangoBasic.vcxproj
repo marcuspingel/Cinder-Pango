@@ -155,7 +155,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;"..\..\..\..\..\include";..\..\..\..\Cairo\include;..\..\..\..\Cairo\include\msw;..\..\..\include;..\..\..\include\cairo;..\..\..\include\fontconfig;..\..\..\include\freetype2;..\..\..\include\glib-2.0;..\..\..\include\harfbuzz;..\..\..\include\libpng16;..\..\..\include\pixman-1;..\..\..\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\..\..\..\Cinder\include;..\..\..\..\..\..\Cinder\blocks\Cairo\include;..\..\..\..\..\..\Cinder\blocks\Cairo\include\msw;..\..\..\include;..\..\..\include\cairo;..\..\..\include\fontconfig;..\..\..\include\freetype2;..\..\..\include\glib-2.0;..\..\..\include\harfbuzz;..\..\..\include\libpng16;..\..\..\include\pixman-1;..\..\..\src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -168,8 +168,8 @@
       <AdditionalIncludeDirectories>"..\..\..\..\..\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\..\Cairo\lib\msw\x86\cairo-static.lib;..\..\..\..\Cairo\lib\msw\x86\pixman-1.lib;libpng.lib;..\..\..\lib\msw\$(PlatformTarget)\cairo.lib;..\..\..\lib\msw\$(PlatformTarget)\fontconfig.lib;..\..\..\lib\msw\$(PlatformTarget)\glib-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gmodule-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gobject-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gthread-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pango-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangocairo-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangoft2-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangowin32-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pixman-1.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>"..\..\..\..\..\lib\msw\$(PlatformTarget)"</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\lib\msw\$(PlatformTarget)\cairo.lib;..\..\..\lib\msw\$(PlatformTarget)\pixman-1.lib;libpng.lib;..\..\..\lib\msw\$(PlatformTarget)\fontconfig.lib;..\..\..\lib\msw\$(PlatformTarget)\glib-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gmodule-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gobject-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\gthread-2.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pango-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangocairo-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangoft2-1.0.lib;..\..\..\lib\msw\$(PlatformTarget)\pangowin32-1.0.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\Cinder\lib\msw\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -418,13 +418,13 @@ xcopy /y "..\..\..\..\..\lib\msw\x86\d3dcompiler_46.dll" "$(OutDir)"
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Cinder\blocks\Cairo\src\Cairo.cpp" />
     <ClCompile Include="..\src\PangoBasicApp.cpp" />
-    <ClCompile Include="..\..\..\..\Cairo\src\Cairo.cpp" />
     <ClCompile Include="..\..\..\src\CinderPango.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Cinder\blocks\Cairo\include\cinder\cairo\Cairo.h" />
     <ClInclude Include="..\include\Resources.h" />
-    <ClInclude Include="..\..\..\..\Cairo\include\cinder\cairo\Cairo.h" />
     <ClInclude Include="..\..\..\src\CinderPango.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

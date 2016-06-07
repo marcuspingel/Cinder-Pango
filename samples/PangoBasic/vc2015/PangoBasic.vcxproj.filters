@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -47,22 +48,22 @@
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\..\Cairo\src\Cairo.cpp">
-      <Filter>Blocks\Cairo\src</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\..\Cairo\include\cinder\cairo\Cairo.h">
-      <Filter>Blocks\Cairo\include\cinder\cairo</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\CinderPango.h">
       <Filter>Blocks\Pango\src</Filter>
     </ClInclude>
     <ClCompile Include="..\..\..\src\CinderPango.cpp">
       <Filter>Blocks\Pango\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Cinder\blocks\Cairo\src\Cairo.cpp">
+      <Filter>Blocks\Cairo\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Cinder\blocks\Cairo\include\cinder\cairo\Cairo.h">
+      <Filter>Blocks\Cairo\include\cinder\cairo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

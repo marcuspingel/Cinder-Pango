@@ -20,7 +20,8 @@
 *.app
 
 *.DS_Store
-
+*.VC.db
+*.VC.VC.db
 *.vs
 *.sdf
 
