@@ -86,15 +86,15 @@ void PangoBasicApp::update() {
 	if (mPango != nullptr) {
 
 		mPango->setText(
-				"<b>Bold Text</b> "
+				"<b>Bold Text中国话不用彁字。</b> "
 				"<span foreground=\"green\" font=\"24.0\">Green téxt</span> "
 				"<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
-				"<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">AVAVAVA Blue text</span> "
+				"<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">中国话不用彁字Я не говорю по-русски. AVAVAVA Blue text</span> "
 				"<i>Italic Text</i> "
 				"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
 				"people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
 				"trapped "
-				"and awaiting help. " +
+                        "and awaiting help.ﬠ	ﬡ	ﬢ	ﬣ	ﬤ	ﬥ	ﬦ	ﬧ	ﬨ	﬩	שׁ	שׂ	שּׁ	שּׂ	אַ	אָ אּ	בּ	גּ	דּ	הּ	וּ	זּ		טּ	יּ	ךּ	כּ	לּ		מּ נּ	סּ		ףּ	פּ		צּ	קּ	רּ	שּ	תּ	וֹ	בֿ	כֿ	פֿ	ﭏ" +
 				std::to_string(getElapsedFrames()));
 
 		// Only renders if it needs to
