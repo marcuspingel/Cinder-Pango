@@ -45,9 +45,6 @@
     <ClCompile Include="..\src\PangoBasicApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClInclude Include="..\include\Resources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\CinderPango.h">
       <Filter>Blocks\Pango\src</Filter>
     </ClInclude>
@@ -64,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Cinder\blocks\Cairo\include\cinder\cairo\Cairo.h">
       <Filter>Blocks\Cairo\include\cinder\cairo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

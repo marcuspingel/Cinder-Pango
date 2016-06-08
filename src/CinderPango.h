@@ -18,8 +18,7 @@
 
 #include <vector>
 
-namespace kp {
-namespace pango {
+namespace kp {namespace pango {
 
 // TODO wrap these up?
 const bool grayscale = false;
@@ -59,7 +58,7 @@ enum class TextAntialias : int {
 	SUBPIXEL,
 };
 
-typedef std::shared_ptr<class CinderPango> CinderPangoRef;
+using CinderPangoRef = std::shared_ptr<class CinderPango>;
 
 class CinderPango : public std::enable_shared_from_this<CinderPango> {
 public:
@@ -67,68 +66,68 @@ public:
 	virtual ~CinderPango();
 
 	// Globals
-	static std::vector<std::string> getFontList(bool verbose);
-	static void logFontList(bool verbose = false);
-	static void loadFont(const ci::fs::path &path);
+	static std::vector<std::string> getFontList( bool verbose );
+	static void logFontList( bool verbose = false );
+	static void loadFont( const ci::fs::path &path );
 	static TextRenderer getTextRenderer();
-	static void setTextRenderer(TextRenderer renderer);
+	static void setTextRenderer( TextRenderer renderer );
 
 	// Rendering
 
-	const std::string getText();
+	const std::string& getText() const;
 
 	// setText can take inline markup to override the default text settings
 	// See here for full list of supported tags:
 	// https://developer.gnome.org/pango/stable/PangoMarkupFormat.html
-	void setText(std::string text);
+	void setText( std::string text );
 
 	// Text is rendered into this texture
-	const ci::gl::TextureRef getTexture();
+	ci::gl::TextureRef getTexture() const;
 
 	// Text smaller than the min size will be clipped
-	ci::ivec2 getMinSize();
-	void setMinSize(int minWidth, int minHeight);
-	void setMinSize(ci::ivec2 minSize);
+	ci::ivec2 getMinSize() const;
+	void setMinSize( int minWidth, int minHeight );
+	void setMinSize( ci::ivec2 minSize );
 
 	// Text can grow up to this size before a line breaks or clipping begins
-	ci::ivec2 getMaxSize();
-	void setMaxSize(int maxWidth, int maxHeight);
-	void setMaxSize(ci::ivec2 maxSize);
+	ci::ivec2 getMaxSize() const;
+	void setMaxSize( int maxWidth, int maxHeight );
+	void setMaxSize( ci::ivec2 maxSize );
 
 	// Setting default font styles is more efficient than passing markup via the text string
 
-	void setDefaultTextStyle(std::string font = "Sans", float size = 12.0, ci::ColorA color = ci::Color::black(), TextWeight weight = TextWeight::NORMAL,
-													 TextAlignment alignment = TextAlignment::LEFT); // convenience
+	void setDefaultTextStyle( std::string font = "Sans", float size = 12.0, ci::ColorA color = ci::Color::black(), TextWeight weight = TextWeight::NORMAL,
+	                          TextAlignment alignment = TextAlignment::LEFT ); // convenience
 
-	ci::ColorA getDefaultTextColor();
-	void setDefaultTextColor(ci::ColorA color);
+	ci::ColorA getDefaultTextColor() const;
+	void setDefaultTextColor( ci::ColorA color );
 
-	ci::ColorA getBackgroundColor();
-	void setBackgroundColor(ci::ColorA color);
+	ci::ColorA getBackgroundColor() const;
+	void setBackgroundColor( ci::ColorA color );
 
-	float getDefaultTextSize();
-	void setDefaultTextSize(float size);
+	float getDefaultTextSize() const;
+	void setDefaultTextSize( float size );
 
-	std::string getDefaultTextFont();
-	void setDefaultTextFont(std::string font);
+	std::string getDefaultTextFont() const;
+	void setDefaultTextFont( std::string font );
 
-	TextWeight getDefaultTextWeight();
-	void setDefaultTextWeight(TextWeight weight);
+	TextWeight getDefaultTextWeight() const;
+	void setDefaultTextWeight( TextWeight weight );
 
-	TextAntialias getTextAntialias();
-	void setTextAntialias(TextAntialias mode);
+	TextAntialias getTextAntialias() const;
+	void setTextAntialias( TextAntialias mode );
 
-	TextAlignment getTextAlignment();
-	void setTextAlignment(TextAlignment alignment);
+	TextAlignment getTextAlignment() const;
+	void setTextAlignment( TextAlignment alignment );
 
-	bool getDefaultTextSmallCapsEnabled();
-	void setDefaultTextSmallCapsEnabled(bool value);
+	bool getDefaultTextSmallCapsEnabled() const;
+	void setDefaultTextSmallCapsEnabled( bool value );
 
-	bool getDefaultTextItalicsEnabled();
-	void setDefaultTextItalicsEnabled(bool value);
+	bool getDefaultTextItalicsEnabled() const;
+	void setDefaultTextItalicsEnabled( bool value );
 
-	float getSpacing();
-	void setSpacing(float spacing);
+	float getSpacing() const;
+	void setSpacing( float spacing );
 
 	// Renders text into the texture.
 	// Returns true if the texture was actually pdated, false if nothing had to change
@@ -136,7 +135,7 @@ public:
 	// explicitly after every change to the text state. It will coalesce all invalidations since the
 	// last frame and only rebuild what needs to be rebuilt to render the diff.
 	// Set force to true to render even if the system thinks state wasn't invalidated.
-	bool render(bool force = false);
+	bool render( bool force = false );
 
 protected:
 	CinderPango();
@@ -186,5 +185,4 @@ private:
 	cairo_surface_t *cairoImageSurface;
 #endif
 };
-}
-} // namespace kp::pango
+}} // namespace kp::pango
