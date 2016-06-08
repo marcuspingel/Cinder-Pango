@@ -22,11 +22,12 @@ class PangoBasicApp : public App {
 
 void PangoBasicApp::setup()
 {
-	kp::pango::CinderPango::setTextRenderer( kp::pango::TextRenderer::FREETYPE );
+	kp::pango::CinderPango::setTextRenderer( kp::pango::TextRenderer::PLATFORM_NATIVE );
 	mPango = kp::pango::CinderPango::create();
 	mPango->setMinSize( 100, 100 );
 	mPango->setMaxSize( getWindowWidth(), getWindowHeight() );
     mPango->setDefaultTextFont( "Times" );
+	mPango->setDefaultTextColor( ColorA( 1.0f, 0.0f, 0.0f, 1.0f ) );
 }
 
 void PangoBasicApp::mouseDown( MouseEvent event )
@@ -43,6 +44,9 @@ void PangoBasicApp::keyDown( KeyEvent event )
 				mPango->setTextAntialias( kp::pango::TextAntialias::DEFAULT );
 			} else {
 				mPango->setTextAntialias( kp::pango::TextAntialias::NONE );
+			}
+			if( event.isShiftDown() ) {
+				mPango->setTextAntialias( kp::pango::TextAntialias::SUBPIXEL );	//	TODO: clarify what this does
 			}
 			break;
 		case KeyEvent::KEY_UP:
@@ -88,17 +92,16 @@ void PangoBasicApp::keyDown( KeyEvent event )
 void PangoBasicApp::update()
 {
 	if( mPango ) {
-		mPango->setText(
-		                "<b>Bold Text中国话不用彁字。</b> "
-		                "<span foreground=\"green\" font=\"24.0\">Green téxt</span> "
-		                "<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
-		                "<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">中国话不用彁字Я не говорю по-русски. AVAVAVA Blue text</span> "
-		                "<i>Italic Text</i> "
-		                "hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
-		                "people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
-		                "trapped "
-		                "and awaiting help.ﬠ	ﬡ	ﬢ	ﬣ	ﬤ	ﬥ	ﬦ	ﬧ	ﬨ	﬩	שׁ	שׂ	שּׁ	שּׂ	אַ	אָ אּ	בּ	גּ	דּ	הּ	וּ	זּ		טּ	יּ	ךּ	כּ	לּ		מּ נּ	סּ		ףּ	פּ		צּ	קּ	רּ	שּ	תּ	וֹ	בֿ	כֿ	פֿ	ﭏ" +
-		                std::to_string( getElapsedFrames() ) );
+		mPango->setText( "<b>Bold Text中国话不用彁字。</b> "
+						 "<span foreground=\"green\" font=\"24.0\">Green téxt</span> "
+						 "<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
+						 "<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">中国话不用彁字Я не говорю по-русски. AVAVAVA Blue text</span> "
+						 "<i>Italic Text</i> "
+						 "hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
+						 "people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
+						 "trapped "
+						 "and awaiting help.ﬠ	ﬡ	ﬢ	ﬣ	ﬤ	ﬥ	ﬦ	ﬧ	ﬨ	﬩	שׁ	שׂ	שּׁ	שּׂ	אַ	אָ אּ	בּ	גּ	דּ	הּ	וּ	זּ		טּ	יּ	ךּ	כּ	לּ		מּ נּ	סּ		ףּ	פּ		צּ	קּ	רּ	שּ	תּ	וֹ	בֿ	כֿ	פֿ	ﭏ" +
+						 std::to_string( getElapsedFrames() ) );
 
 		// Only renders if it needs to
 		mPango->render();
@@ -109,7 +112,7 @@ void PangoBasicApp::draw()
 {
 	float bgColor = ( 0.5 + 0.5 * sin( 0.5 * getElapsedSeconds() ) );
 	gl::clear( Color( bgColor, bgColor, bgColor ) );
-	gl::enableAlphaBlendingPremult();
+	gl::ScopedBlendPremult blend;
 
 	if( mPango ) {
 		gl::draw( mPango->getTexture() );
