@@ -18,7 +18,7 @@
 
 #include <vector>
 
-namespace kp {namespace pango {
+namespace kp { namespace pango {
 
 // TODO wrap these up?
 const bool grayscale = false;
@@ -61,7 +61,7 @@ enum class TextAntialias : int {
 using CinderPangoRef = std::shared_ptr<class CinderPango>;
 
 class CinderPango : public std::enable_shared_from_this<CinderPango> {
-public:
+  public:
 	static CinderPangoRef create();
 	virtual ~CinderPango();
 
@@ -137,10 +137,10 @@ public:
 	// Set force to true to render even if the system thinks state wasn't invalidated.
 	bool render( bool force = false );
 
-protected:
+  protected:
 	CinderPango();
 
-private:
+  private:
 	ci::gl::TextureRef mTexture;
 	std::string mText;
 	std::string mProcessedText; // stores text after newline filtering
