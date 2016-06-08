@@ -51,7 +51,7 @@ void PangoBasicApp::keyDown( KeyEvent event )
 			mPango->setSpacing( mPango->getSpacing() - 1.0 );
 			break;
 		case KeyEvent::KEY_i:
-			mPango->setDefaultTextItalicsEnabled( !mPango->getDefaultTextItalicsEnabled() );
+			mPango->setDefaultTextItalicsEnabled( ! mPango->getDefaultTextItalicsEnabled() );
 			break;
 		case KeyEvent::KEY_d:
 			mPango = nullptr;

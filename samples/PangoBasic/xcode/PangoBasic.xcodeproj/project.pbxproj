@@ -289,22 +289,22 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
-					../../../lib/macosx/libcairo.a,
-					../../../lib/macosx/libfontconfig.a,
-					../../../lib/macosx/libfreetype.a,
-					../../../lib/macosx/libgettextpo.a,
+					"\"../../../lib/macosx/libcairo.a\"",
+					"\"../../../lib/macosx/libfontconfig.a\"",
+					"\"../../../lib/macosx/libfreetype.a\"",
+					"\"../../../lib/macosx/libgettextpo.a\"",
 					"\"../../../lib/macosx/libgio-2.0.a\"",
 					"\"../../../lib/macosx/libglib-2.0.a\"",
 					"\"../../../lib/macosx/libgmodule-2.0.a\"",
 					"\"../../../lib/macosx/libgobject-2.0.a\"",
 					"\"../../../lib/macosx/libgthread-2.0.a\"",
-					../../../lib/macosx/libharfbuzz.a,
-					../../../lib/macosx/libintl.a,
+					"\"../../../lib/macosx/libharfbuzz.a\"",
+					"\"../../../lib/macosx/libintl.a\"",
 					"\"../../../lib/macosx/libpango-1.0.a\"",
 					"\"../../../lib/macosx/libpangocairo-1.0.a\"",
 					"\"../../../lib/macosx/libpangoft2-1.0.a\"",
 					"\"../../../lib/macosx/libpixman-1.a\"",
-					../../../lib/macosx/libpng.a,
+					"\"../../../lib/macosx/libpng.a\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libcinder.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PangoBasic;
@@ -335,22 +335,22 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
-					../../../lib/macosx/libcairo.a,
-					../../../lib/macosx/libfontconfig.a,
-					../../../lib/macosx/libfreetype.a,
-					../../../lib/macosx/libgettextpo.a,
+					"\"../../../lib/macosx/libcairo.a\"",
+					"\"../../../lib/macosx/libfontconfig.a\"",
+					"\"../../../lib/macosx/libfreetype.a\"",
+					"\"../../../lib/macosx/libgettextpo.a\"",
 					"\"../../../lib/macosx/libgio-2.0.a\"",
 					"\"../../../lib/macosx/libglib-2.0.a\"",
 					"\"../../../lib/macosx/libgmodule-2.0.a\"",
 					"\"../../../lib/macosx/libgobject-2.0.a\"",
 					"\"../../../lib/macosx/libgthread-2.0.a\"",
-					../../../lib/macosx/libharfbuzz.a,
-					../../../lib/macosx/libintl.a,
+					"\"../../../lib/macosx/libharfbuzz.a\"",
+					"\"../../../lib/macosx/libintl.a\"",
 					"\"../../../lib/macosx/libpango-1.0.a\"",
 					"\"../../../lib/macosx/libpangocairo-1.0.a\"",
 					"\"../../../lib/macosx/libpangoft2-1.0.a\"",
 					"\"../../../lib/macosx/libpixman-1.a\"",
-					../../../lib/macosx/libpng.a,
+					"\"../../../lib/macosx/libpng.a\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.libcinder.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PangoBasic;

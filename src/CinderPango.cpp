@@ -14,25 +14,26 @@
 #endif
 
 using namespace kp::pango;
+using namespace ci;
 
 #pragma mark - Lifecycle
 
 CinderPangoRef CinderPango::create()
 {
-	return CinderPangoRef( new CinderPango() )->shared_from_this();
+	return CinderPangoRef( new CinderPango() );
 }
 
 CinderPango::CinderPango()
     : mText( "" )
     , mProcessedText( "" )
     , mProbablyHasMarkup( false )
-    , mMinSize( ci::ivec2( 0, 0 ) )
-    , mMaxSize( ci::ivec2( 320, 240 ) )
+    , mMinSize( ivec2( 0, 0 ) )
+    , mMaxSize( ivec2( 320, 240 ) )
     , mDefaultTextFont( "Sans" )
     , mDefaultTextItalicsEnabled( false )
     , mDefaultTextSmallCapsEnabled( false )
-    , mDefaultTextColor( ci::ColorA::black() )
-    , mBackgroundColor( ci::ColorA::zero() )
+    , mDefaultTextColor( ColorA::black() )
+    , mBackgroundColor( ColorA::zero() )
     , mDefaultTextSize( 12.0 )
     , mTextAlignment( TextAlignment::LEFT )
     , mDefaultTextWeight( TextWeight::NORMAL )
@@ -144,13 +145,13 @@ void CinderPango::setText( std::string text )
 	}
 }
 
-ci::gl::TextureRef CinderPango::getTexture() const
+gl::TextureRef CinderPango::getTexture() const
 {
 	// TODO nullptr check?
 	return mTexture;
 }
 
-void CinderPango::setDefaultTextStyle( std::string font, float size, ci::ColorA color, TextWeight weight, TextAlignment alignment )
+void CinderPango::setDefaultTextStyle( std::string font, float size, ColorA color, TextWeight weight, TextAlignment alignment )
 {
 	this->setDefaultTextFont( font );
 	this->setDefaultTextSize( size );
@@ -217,17 +218,17 @@ void CinderPango::setTextAntialias( TextAntialias mode )
 	}
 }
 
-ci::ivec2 CinderPango::getMinSize() const
+ivec2 CinderPango::getMinSize() const
 {
 	return mMinSize;
 }
 
 void CinderPango::setMinSize( int minWidth, int minHeight )
 {
-	setMinSize( ci::ivec2( minWidth, minHeight ) );
+	setMinSize( ivec2( minWidth, minHeight ) );
 }
 
-void CinderPango::setMinSize( ci::ivec2 minSize )
+void CinderPango::setMinSize( ivec2 minSize )
 {
 	if( mMinSize != minSize ) {
 		mMinSize = minSize;
@@ -236,17 +237,17 @@ void CinderPango::setMinSize( ci::ivec2 minSize )
 	}
 }
 
-ci::ivec2 CinderPango::getMaxSize() const
+ivec2 CinderPango::getMaxSize() const
 {
 	return mMaxSize;
 }
 
 void CinderPango::setMaxSize( int maxWidth, int maxHeight )
 {
-	setMaxSize( ci::ivec2( maxWidth, maxHeight ) );
+	setMaxSize( ivec2( maxWidth, maxHeight ) );
 }
 
-void CinderPango::setMaxSize( ci::ivec2 maxSize )
+void CinderPango::setMaxSize( ivec2 maxSize )
 {
 	if( mMaxSize != maxSize ) {
 		mMaxSize = maxSize;
@@ -255,12 +256,12 @@ void CinderPango::setMaxSize( ci::ivec2 maxSize )
 	}
 }
 
-ci::ColorA CinderPango::getDefaultTextColor() const
+ColorA CinderPango::getDefaultTextColor() const
 {
 	return mDefaultTextColor;
 }
 
-void CinderPango::setDefaultTextColor( ci::ColorA color )
+void CinderPango::setDefaultTextColor( ColorA color )
 {
 	if( mDefaultTextColor != color ) {
 		mDefaultTextColor = color;
@@ -268,12 +269,12 @@ void CinderPango::setDefaultTextColor( ci::ColorA color )
 	}
 }
 
-ci::ColorA CinderPango::getBackgroundColor() const
+ColorA CinderPango::getBackgroundColor() const
 {
 	return mBackgroundColor;
 }
 
-void CinderPango::setBackgroundColor( ci::ColorA color )
+void CinderPango::setBackgroundColor( ColorA color )
 {
 	if( mBackgroundColor != color ) {
 		mBackgroundColor = color;
@@ -499,7 +500,7 @@ bool CinderPango::render( bool force )
 		if( force || mNeedsTextRender ) {
 			// Render text
 
-			if( ( mBackgroundColor == ci::ColorA::zero() ) && ! freshCairoSurface ) {
+			if( ( mBackgroundColor == ColorA::zero() ) && ! freshCairoSurface ) {
 				// Clear the context... if the background is clear and it's not a brand-new surface buffer
 				cairo_save( cairoContext );
 				cairo_set_operator( cairoContext, CAIRO_OPERATOR_CLEAR );
@@ -528,7 +529,7 @@ bool CinderPango::render( bool force )
 
 			if( mTexture == nullptr || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
 				// Create a new texture if needed
-				mTexture = ci::gl::Texture2d::create( pixels, GL_BGRA, mPixelWidth, mPixelHeight );
+				mTexture = gl::Texture2d::create( pixels, GL_BGRA, mPixelWidth, mPixelHeight );
 			} else {
 				// Update the existing texture
 				mTexture->update( pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, mPixelWidth, mPixelHeight );
@@ -603,7 +604,7 @@ TextRenderer CinderPango::getTextRenderer()
 	return TextRenderer::PLATFORM_NATIVE;
 }
 
-void CinderPango::loadFont( const ci::fs::path &path )
+void CinderPango::loadFont( const fs::path &path )
 {
 	const FcChar8 *fcPath = reinterpret_cast<const FcChar8 * >( path.c_str() );
 	FcBool fontAddStatus = FcConfigAppFontAddFile( FcConfigGetCurrent(), fcPath );
