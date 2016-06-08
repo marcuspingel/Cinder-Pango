@@ -26,6 +26,7 @@ void PangoBasicApp::setup()
 	mPango = kp::pango::CinderPango::create();
 	mPango->setMinSize( 100, 100 );
 	mPango->setMaxSize( getWindowWidth(), getWindowHeight() );
+    mPango->setDefaultTextFont( "Times" );
 }
 
 void PangoBasicApp::mouseDown( MouseEvent event )

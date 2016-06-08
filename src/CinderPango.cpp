@@ -524,10 +524,10 @@ bool CinderPango::render( bool force )
 			cairoImageSurface = cairo_win32_surface_get_image( cairoSurface );
 			unsigned char *pixels = cairo_image_surface_get_data( cairoImageSurface );
 #else
-			unsigned char *pixels = cairo_image_surface_get_data(cairoSurface);
+			unsigned char *pixels = cairo_image_surface_get_data( cairoSurface );
 #endif
 
-			if( mTexture == nullptr || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
+			if( ! mTexture || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
 				// Create a new texture if needed
 				mTexture = gl::Texture2d::create( pixels, GL_BGRA, mPixelWidth, mPixelHeight );
 			} else {
