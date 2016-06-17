@@ -44,8 +44,9 @@ CinderPango::CinderPango()
     , mNeedsTextRender( false )
     , mNeedsFontOptionUpdate( false )
     , mNeedsMarkupDetection( false )
+    , mAutoCreateTexture( false )
     , mPixelWidth( -1 )
-    , mPixelHeight( -1 )
+	, mPixelHeight( -1 )
 {
 	// Create Font Map for reuse
 	pFontMap = nullptr;
@@ -147,9 +148,9 @@ void CinderPango::setText( const std::string &text )
 
 gl::TextureRef CinderPango::getTexture() const
 {
-	if( mTexture ) {
+	if( mTexture )
 		return mTexture;
-	}
+
 	CI_LOG_W( "Texture uninitialized" );
 	return gl::Texture::create( 2, 2 );	//	dummy texture
 }
@@ -529,17 +530,19 @@ bool CinderPango::render( bool force )
 			// Copy it out to a texture
 #ifdef CAIRO_HAS_WIN32_SURFACE
 			pCairoImageSurface = cairo_win32_surface_get_image( pCairoSurface );
-			unsigned char *pixels = cairo_image_surface_get_data( pCairoImageSurface );
+			if( mAutoCreateTexture ) {
+				unsigned char *pixels = cairo_image_surface_get_data( pCairoImageSurface );
 #else
-			unsigned char *pixels = cairo_image_surface_get_data( pCairoSurface );
+				unsigned char *pixels = cairo_image_surface_get_data( pCairoSurface );
 #endif
 
-			if( ! mTexture || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
-				// Create a new texture if needed
-				mTexture = gl::Texture2d::create( pixels, GL_BGRA, mPixelWidth, mPixelHeight );
-			} else {
-				// Update the existing texture
-				mTexture->update( pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, mPixelWidth, mPixelHeight );
+				if( ! mTexture || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
+					// Create a new texture if needed
+					mTexture = gl::Texture2d::create( pixels, GL_BGRA, mPixelWidth, mPixelHeight );
+				} else {
+					// Update the existing texture
+					mTexture->update( pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, mPixelWidth, mPixelHeight );
+				}
 			}
 
 			mNeedsTextRender = false;

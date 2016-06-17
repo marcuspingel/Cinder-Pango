@@ -60,8 +60,9 @@ enum class TextAntialias : int {
 
 using CinderPangoRef = std::shared_ptr<class CinderPango>;
 
-class CinderPango : public std::enable_shared_from_this<CinderPango> {
-  public:
+class CinderPango : public std::enable_shared_from_this<CinderPango>
+{
+public:
 	static CinderPangoRef create();
 	virtual ~CinderPango();
 
@@ -83,6 +84,12 @@ class CinderPango : public std::enable_shared_from_this<CinderPango> {
 
 	// Text is rendered into this texture
 	ci::gl::TextureRef getTexture() const;
+
+#ifdef CAIRO_HAS_WIN32_SURFACE
+	cairo_surface_t* getCairoSurface() const { return pCairoImageSurface; }
+#else
+	cairo_surface_t* getCairoSurface() const { return pCairoSurface; }
+#endif
 
 	// Text smaller than the min size will be clipped
 	ci::ivec2 getMinSize() const;
@@ -170,6 +177,8 @@ class CinderPango : public std::enable_shared_from_this<CinderPango> {
 	bool mNeedsTextRender;
 	bool mNeedsFontOptionUpdate;
 	bool mNeedsMarkupDetection;
+
+	bool mAutoCreateTexture;
 
 	// simply stored to check for change across renders
 	int mPixelWidth;

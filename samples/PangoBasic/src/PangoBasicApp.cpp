@@ -135,7 +135,7 @@ void PangoBasicApp::createInstance()
     mPango = kp::pango::CinderPango::create();
     mPango->setMinSize( 100, 100 );
     mPango->setMaxSize( getWindowWidth(), getWindowHeight() );
-    mPango->setDefaultTextFont( "Verdana" );
+    mPango->setDefaultTextFont( "Sans" );
     mPango->setDefaultTextSize( 16.0f );
     mPango->setDefaultTextColor( ColorA( 0.0f, 0.0f, 0.0f, 1.0f ) );
 }
