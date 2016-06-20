@@ -533,6 +533,7 @@ bool CinderPango::render( bool force )
 			if( mAutoCreateTexture ) {
 				unsigned char *pixels = cairo_image_surface_get_data( pCairoImageSurface );
 #else
+			if( mAutoCreateTexture ) {
 				unsigned char *pixels = cairo_image_surface_get_data( pCairoSurface );
 #endif
 
@@ -648,7 +649,7 @@ std::vector<std::string> CinderPango::getFontList( bool verbose )
 		fontList.push_back( family_name );
 
 		if( verbose ) {
-			CI_LOG_V( "Family " << i << ": " << family_name );
+			CI_LOG_I( "Family " << i << ": " << family_name );
 
 			// Also interrogate individual fonts in the family
 			// Useful if something isn't rendering correctly
@@ -666,10 +667,10 @@ std::vector<std::string> CinderPango::getFontList( bool verbose )
 				PangoWeight weight = pango_font_description_get_weight( description );
 				uint32_t hash = pango_font_description_hash( description );
 
-				CI_LOG_V( "\tFace " << j << ": " << face_name );
-				CI_LOG_V( "\t\tDescription: " << description_string );
-				CI_LOG_V( "\t\tWeight: " << weight );
-				CI_LOG_V( "\t\tHash: " << hash );
+				CI_LOG_I( "\tFace " << j << ": " << face_name );
+				CI_LOG_I( "\t\tDescription: " << description_string );
+				CI_LOG_I( "\t\tWeight: " << weight );
+				CI_LOG_I( "\t\tHash: " << hash );
 				// TODO more stuff?
 
 				pango_font_description_free( description );
@@ -689,7 +690,7 @@ void CinderPango::logFontList( bool verbose )
 
 	auto i { 0 };
 	for( auto &fontName : fontList ) {
-		CI_LOG_V( "Font " << i << ": " << fontName );
+		CI_LOG_I( "Font " << i << ": " << fontName );
 		i++;
 	}
 }

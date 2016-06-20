@@ -139,6 +139,8 @@ public:
 	float getSpacing() const;
 	void setSpacing( float spacing );
 
+	ci::ivec2 getPixelSize() const { return ci::ivec2( mPixelWidth, mPixelHeight ); };
+
 	// Renders text into the texture.
 	// Returns true if the texture was actually pdated, false if nothing had to change
 	// It's reasonable (and more efficient) to just run this in an update loop rather than calling it
