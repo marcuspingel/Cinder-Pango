@@ -91,6 +91,7 @@ public:
 	cairo_surface_t* getCairoSurface() const { return pCairoSurface; }
 #endif
 
+
 	// Text smaller than the min size will be clipped
 	ci::ivec2 getMinSize() const;
 	void setMinSize( int minWidth, int minHeight );
@@ -142,7 +143,7 @@ public:
 	ci::ivec2 getPixelSize() const { return ci::ivec2( mPixelWidth, mPixelHeight ); };
 
 	// Renders text into the texture.
-	// Returns true if the texture was actually pdated, false if nothing had to change
+	// Returns true if the texture was actually updated, false if nothing had to change
 	// It's reasonable (and more efficient) to just run this in an update loop rather than calling it
 	// explicitly after every change to the text state. It will coalesce all invalidations since the
 	// last frame and only rebuild what needs to be rebuilt to render the diff.

@@ -16,76 +16,64 @@
 using namespace kp::pango;
 using namespace ci;
 
-#pragma mark - Lifecycle
-
 CinderPangoRef CinderPango::create()
 {
 	return CinderPangoRef( new CinderPango() );
 }
 
-CinderPango::CinderPango()
-    : mText( "" )
-    , mProcessedText( "" )
-    , mProbablyHasMarkup( false )
-    , mMinSize( ivec2( 0, 0 ) )
-    , mMaxSize( ivec2( 320, 240 ) )
-    , mDefaultTextFont( "Sans" )
-    , mDefaultTextItalicsEnabled( false )
-    , mDefaultTextSmallCapsEnabled( false )
-    , mDefaultTextColor( ColorA::black() )
-    , mBackgroundColor( ColorA::zero() )
-    , mDefaultTextSize( 12.0 )
-    , mTextAlignment( TextAlignment::LEFT )
-    , mDefaultTextWeight( TextWeight::NORMAL )
-    , mTextAntialias( TextAntialias::DEFAULT )
-    , mSpacing( 0 )
-    , mNeedsFontUpdate( false )
-    , mNeedsMeasuring( false )
-    , mNeedsTextRender( false )
-    , mNeedsFontOptionUpdate( false )
-    , mNeedsMarkupDetection( false )
-    , mAutoCreateTexture( false )
-    , mPixelWidth( -1 )
-	, mPixelHeight( -1 )
+CinderPango::CinderPango() :
+	mText( "" ),
+	mProcessedText( "" ),
+	mProbablyHasMarkup( false ),
+	mMinSize( ivec2( 0, 0 ) ),
+	mMaxSize( ivec2( 320, 240 ) ),
+	mDefaultTextFont( "Sans" ),
+	mDefaultTextItalicsEnabled( false ),
+	mDefaultTextSmallCapsEnabled( false ),
+	mDefaultTextColor( ColorA::black() ),
+	mBackgroundColor( ColorA::zero() ),
+	mDefaultTextSize( 12.0 ),
+	mTextAlignment( TextAlignment::LEFT ),
+	mDefaultTextWeight( TextWeight::NORMAL ),
+	mTextAntialias( TextAntialias::DEFAULT ),
+	mSpacing( 0 ),
+	mNeedsFontUpdate( false ),
+	mNeedsMeasuring( false ),
+	mNeedsTextRender( false ),
+	mNeedsFontOptionUpdate( false ),
+	mNeedsMarkupDetection( false ),
+	mAutoCreateTexture( false ),
+	mPixelWidth( -1 ),
+	mPixelHeight( -1 ),
+	pFontMap( nullptr ),
+	pPangoContext( nullptr ),
+	pPangoLayout( nullptr ),
+	pFontDescription( nullptr ),
+#ifdef CAIRO_HAS_WIN32_SURFACE
+	pCairoSurface( nullptr ),
+#endif
+	pCairoContext( nullptr ),
+	pCairoFontOptions( nullptr ),
+	pCairoImageSurface( nullptr )
 {
-	// Create Font Map for reuse
-	pFontMap = nullptr;
-	pFontMap = pango_cairo_font_map_new();
+	pFontMap = pango_cairo_font_map_new();		// Create Font Map for reuse
 	if( ! pFontMap ) {
 		CI_LOG_E( "Cannot create the pango font map." );
 		return;
 	}
 
-	// Create Pango Context for reuse
-	pPangoContext = nullptr;
-	pPangoContext = pango_font_map_create_context( pFontMap );
+	pPangoContext = pango_font_map_create_context( pFontMap ); 	// Create Pango Context for reuse
 	if( ! pPangoContext ) {
 		CI_LOG_E( "Cannot create the pango font context." );
 		return;
 	}
 
-	// Create Pango Layout for reuse
-	pPangoLayout = nullptr;
-	pPangoLayout = pango_layout_new( pPangoContext );
+	pPangoLayout = pango_layout_new( pPangoContext );	// Create Pango Layout for reuse
 	if( ! pPangoLayout ) {
 		CI_LOG_E( "Cannot create the pango layout." );
 		return;
 	}
 
-	// Initialize Cairo surface and context, will be instantiated on demand
-	pCairoSurface = nullptr;
-
-#ifdef CAIRO_HAS_WIN32_SURFACE
-	pCairoImageSurface = nullptr;
-#endif
-
-	pCairoContext = nullptr;
-
-	// TODO pass these in.....
-	// Will be created on demand
-	pFontDescription = nullptr;
-
-	pCairoFontOptions = nullptr;
 	pCairoFontOptions = cairo_font_options_create();
 	if( ! pCairoFontOptions ) {
 		CI_LOG_E( "Cannot create Cairo font options." );
@@ -101,35 +89,28 @@ CinderPango::CinderPango()
 CinderPango::~CinderPango()
 {
 	// This causes crash on windows
-	if( pCairoContext ) {
+	if( pCairoContext )
 		cairo_destroy( pCairoContext );
-	}
 
-	if( pFontDescription ) {
+	if( pFontDescription )
 		pango_font_description_free( pFontDescription );
-	}
 
-	if( pCairoFontOptions ) {
+	if( pCairoFontOptions )
 		cairo_font_options_destroy( pCairoFontOptions );
-	}
 
 #ifdef CAIRO_HAS_WIN32_SURFACE
-	if( pCairoImageSurface ) {
+	if( pCairoImageSurface )
 		cairo_surface_destroy( pCairoImageSurface );
-	}
 #else
 	// Crashes windows...
-	if( pCairoSurface ) {
+	if( pCairoSurface )
 		cairo_surface_destroy( pCairoSurface );
-	}
 #endif
 
 	g_object_unref( pFontMap );
 	g_object_unref( pPangoLayout );
 	//g_object_unref( pPangoContext ); // this one crashes Windows?
 }
-
-#pragma mark - Getters / Setters
 
 const std::string& CinderPango::getText() const
 {
@@ -346,8 +327,6 @@ void CinderPango::setDefaultTextFont( const std::string &font )
 	}
 }
 
-#pragma mark - Pango Bridge
-
 bool CinderPango::render( bool force )
 {
 	if( force || mNeedsFontUpdate || mNeedsMeasuring || mNeedsTextRender || mNeedsMarkupDetection ) {
@@ -531,10 +510,10 @@ bool CinderPango::render( bool force )
 #ifdef CAIRO_HAS_WIN32_SURFACE
 			pCairoImageSurface = cairo_win32_surface_get_image( pCairoSurface );
 			if( mAutoCreateTexture ) {
-				unsigned char *pixels = cairo_image_surface_get_data( pCairoImageSurface );
+				auto pixels = cairo_image_surface_get_data( pCairoImageSurface );
 #else
 			if( mAutoCreateTexture ) {
-				unsigned char *pixels = cairo_image_surface_get_data( pCairoSurface );
+				auto pixels = cairo_image_surface_get_data( pCairoSurface );
 #endif
 
 				if( ! mTexture || ( mTexture->getWidth() != mPixelWidth ) || ( mTexture->getHeight() != mPixelHeight ) ) {
@@ -554,8 +533,6 @@ bool CinderPango::render( bool force )
 		return false;
 	}
 }
-
-#pragma mark - Static Methods
 
 void CinderPango::setTextRenderer( TextRenderer renderer )
 {
