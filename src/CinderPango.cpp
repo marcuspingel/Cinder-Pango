@@ -50,11 +50,11 @@ CinderPango::CinderPango() :
 	pPangoLayout( nullptr ),
 	pFontDescription( nullptr ),
 #ifdef CAIRO_HAS_WIN32_SURFACE
-	pCairoSurface( nullptr ),
+    pCairoImageSurface( nullptr ),
 #endif
+    pCairoSurface( nullptr ),
 	pCairoContext( nullptr ),
-	pCairoFontOptions( nullptr ),
-	pCairoImageSurface( nullptr )
+	pCairoFontOptions( nullptr )
 {
 	pFontMap = pango_cairo_font_map_new();		// Create Font Map for reuse
 	if( ! pFontMap ) {
